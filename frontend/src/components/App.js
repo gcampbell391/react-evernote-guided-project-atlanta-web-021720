@@ -10,7 +10,8 @@ class App extends Component {
     this.state = {
       allNotes: [],
       note: null,
-      renderEdit: false
+      renderEdit: false,
+      searchTerm: ''
     }
   }
 
@@ -72,6 +73,34 @@ class App extends Component {
     })
   }
 
+  handleNewNote = () => {
+    const newNote = {
+      title: 'New Note',
+      body: 'Enter Message Here'
+    }
+    fetch(`http://localhost:3000/api/v1/notes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newNote),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        this.setState({ allNotes: [...this.state.allNotes, data] })
+      })
+    Swal.fire({
+      icon: 'success',
+      title: 'New Note Added',
+      text: 'The note was created successfully!',
+      timer: '1500'
+    })
+  }
+
+  handleSearchChange = (event) => {
+    this.setState({ searchTerm: event.target.value.toLowerCase() })
+  }
 
   render() {
     return (
@@ -87,6 +116,9 @@ class App extends Component {
           handleNoteBodyChange={this.handleNoteBodyChange}
           cancelNoteEdit={this.cancelNoteEdit}
           handleNoteSave={this.handleNoteSave}
+          handleNewNote={this.handleNewNote}
+          handleSearchChange={this.handleSearchChange}
+          searchTerm={this.state.searchTerm}
         />
       </div>
     );

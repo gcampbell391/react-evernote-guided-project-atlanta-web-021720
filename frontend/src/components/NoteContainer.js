@@ -9,9 +9,14 @@ class NoteContainer extends Component {
   render() {
     return (
       <Fragment>
-        <Search />
+        <Search handleSearchChange={this.props.handleSearchChange} searchTerm={this.props.searchTerm} />
         <div className='container'>
-          <Sidebar allNotes={this.props.allNotes} onNoteClick={this.props.onNoteClick} />
+          <Sidebar
+            allNotes={this.props.allNotes}
+            onNoteClick={this.props.onNoteClick}
+            handleNewNote={this.props.handleNewNote}
+            searchTerm={this.props.searchTerm}
+          />
           <Content
             note={this.props.note}
             renderEdit={this.props.renderEdit}
