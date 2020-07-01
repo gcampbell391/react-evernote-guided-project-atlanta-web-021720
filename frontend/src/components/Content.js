@@ -4,11 +4,18 @@ import NoteViewer from './NoteViewer';
 import Instructions from './Instructions';
 
 class Content extends Component {
+
   renderContent = (note) => {
-    if (false) {
-      return <NoteEditor />;
+    if (this.props.renderEdit) {
+      return <NoteEditor
+        note={note}
+        handleNoteTitleChange={this.props.handleNoteTitleChange}
+        handleNoteBodyChange={this.props.handleNoteBodyChange}
+        cancelNoteEdit={this.props.cancelNoteEdit}
+        handleNoteSave={this.props.handleNoteSave}
+      />;
     } else if (note) {
-      return <NoteViewer note={note} />;
+      return <NoteViewer note={note} handleNoteEdit={this.props.handleNoteEdit} />;
     } else {
       return <Instructions />;
     }

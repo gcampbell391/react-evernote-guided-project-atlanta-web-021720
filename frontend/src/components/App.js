@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import NoteContainer from './NoteContainer';
+import Swal from 'sweetalert2'
 
 
 class App extends Component {
@@ -8,7 +9,8 @@ class App extends Component {
     super()
     this.state = {
       allNotes: [],
-      note: null
+      note: null,
+      renderEdit: false
     }
   }
 
@@ -22,14 +24,70 @@ class App extends Component {
 
   onNoteClick = (note) => {
     this.setState({ note: note })
+    this.setState({ renderEdit: false })
   }
 
+  handleNoteEdit = () => {
+    console.log("edit")
+    this.setState({ renderEdit: true })
+  }
+
+  handleNoteTitleChange = (event) => {
+    let newNote = this.state.note
+    newNote.title = event.target.value
+    this.setState({ note: newNote })
+  }
+
+  handleNoteBodyChange = (event) => {
+    let newNote = this.state.note
+    newNote.body = event.target.value
+    this.setState({ note: newNote })
+  }
+
+  cancelNoteEdit = () => {
+    this.setState({ renderEdit: false })
+  }
+
+  handleNoteSave = (event) => {
+    event.preventDefault()
+    console.log("saved")
+    const newNote = this.state.note
+    fetch(`http://localhost:3000/api/v1/notes/${newNote.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newNote),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+      })
+    this.setState({ renderEdit: false })
+    Swal.fire({
+      icon: 'success',
+      title: 'Update Complete',
+      text: 'The note was updated successfully!',
+      timer: '2000'
+    })
+  }
+
+
   render() {
-    console.log(this.state.note)
     return (
       <div className="app">
         <Header />
-        <NoteContainer allNotes={this.state.allNotes} onNoteClick={this.onNoteClick} note={this.state.note} />
+        <NoteContainer
+          allNotes={this.state.allNotes}
+          onNoteClick={this.onNoteClick}
+          note={this.state.note}
+          handleNoteEdit={this.handleNoteEdit}
+          renderEdit={this.state.renderEdit}
+          handleNoteTitleChange={this.handleNoteTitleChange}
+          handleNoteBodyChange={this.handleNoteBodyChange}
+          cancelNoteEdit={this.cancelNoteEdit}
+          handleNoteSave={this.handleNoteSave}
+        />
       </div>
     );
   }

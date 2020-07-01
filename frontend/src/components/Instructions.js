@@ -1,7 +1,11 @@
 import React from 'react';
 
 const Instructions = () => {
-  return <p className="instructions">Select a note.</p>;
+  return (
+    <div>
+      <img src={require("../imgs/justNoteItLogo.png")} className="justNoteItLogo" />
+    </div>
+  )
 }
 
 export default Instructions;
