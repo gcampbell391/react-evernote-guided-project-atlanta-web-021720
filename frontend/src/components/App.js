@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import Header from './Header';
 import NoteContainer from './NoteContainer';
 
+
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      allNotes: []
+      allNotes: [],
+      note: null
     }
   }
 
@@ -18,12 +20,16 @@ class App extends Component {
       })
   }
 
+  onNoteClick = (note) => {
+    this.setState({ note: note })
+  }
+
   render() {
-    console.log(this.state.allNotes)
+    console.log(this.state.note)
     return (
       <div className="app">
         <Header />
-        <NoteContainer />
+        <NoteContainer allNotes={this.state.allNotes} onNoteClick={this.onNoteClick} note={this.state.note} />
       </div>
     );
   }

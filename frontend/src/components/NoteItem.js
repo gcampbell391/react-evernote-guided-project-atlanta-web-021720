@@ -1,9 +1,9 @@
 import React from 'react';
 
 const NoteItem = (props) => (
-  <li>
-    <h2>Title</h2>
-    <p>Caption...</p>
+  <li onClick={() => props.onNoteClick(props.note)}>
+    <h2>{props.note.title}</h2>
+    <p className="noteBody">{props.note.body}</p>
   </li>
 );
 

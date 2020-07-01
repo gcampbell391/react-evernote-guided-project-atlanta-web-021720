@@ -4,13 +4,15 @@ import Sidebar from './Sidebar';
 import Content from './Content';
 
 class NoteContainer extends Component {
+
+
   render() {
     return (
       <Fragment>
         <Search />
         <div className='container'>
-          <Sidebar />
-          <Content />
+          <Sidebar allNotes={this.props.allNotes} onNoteClick={this.props.onNoteClick} />
+          <Content note={this.props.note} />
         </div>
       </Fragment>
     );

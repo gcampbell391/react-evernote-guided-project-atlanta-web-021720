@@ -132,6 +132,9 @@ div.sidebar ul li:hover {
   margin: 10px 0px;
   padding: 20px;
   border: 2px dashed grey;
+  height:400px;
+  overflow:scroll;
+  overflow-x:hidden;
 }
 
 .sidebar {
@@ -184,4 +187,11 @@ button:hover, .nav-bar:hover, input[type="submit"]:hover {
 
 button:focus, input[type="submit"]:focus {
   outline: none;
+}
+
+.noteBody{
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
